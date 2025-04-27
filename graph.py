@@ -4,6 +4,8 @@ import plotly.graph_objects as go
 from dash import Dash, dcc, html, Input, Output  # pip install dash (version 2.0.0 or higher)
 import requests
 import pprint
+import flask
+import location
 
 
 app = Dash(__name__)
@@ -44,6 +46,24 @@ app.layout = html.Div([
 
     dcc.Graph(id='my_bee_map', figure=heatmap_fig)
 ])
+
+@app.server.route("/send_data", method="POST")
+def get_user_submision():
+    if flask.request.method == "POST":
+        data : dict = flask.request.get_json()
+        data_structure = ['issue_reported', 'severity', 'latitude', 'longitude']
+        
+        if 'issue_reported' in data and data['issue_reported'] in score_map:
+            new_row = pd.DataFrame([
+                data['issue_reported'],
+                score_map[data['issue_reported']],
+                0,
+                0
+            ])
+            pd.concat([crash_data, new_row], ignore_index=True)
+            return {'status' : 'success'}
+        else:
+            return {'status' : 'error', 'message' : 'missing one or more required elements'}
 
 
 # -------------------------------------------------------------------------------
