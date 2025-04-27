@@ -7,9 +7,7 @@
     <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
 </head>
 <body>
-    <h1>Estimated Fire Damage by County in California</h1>
     <div id="map" style="width:100%; height:600px;"></div>
-
     <script>
         var graph_json = {{ graph_json | safe }};
         Plotly.newPlot('map', graph_json.data, graph_json.layout);
