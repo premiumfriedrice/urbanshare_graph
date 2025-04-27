@@ -47,5 +47,5 @@ app.layout = html.Div([
 
 
 # -------------------------------------------------------------------------------
-if __name__ == '__main__':
-    app.run(debug=True, port=3001)  # for running on a different port
+# if __name__ == '__main__':
+#     app.run(debug=True, port=3001)  # for running on a different port
